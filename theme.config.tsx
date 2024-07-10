@@ -1,6 +1,6 @@
 import React from 'react';
 import { DocsThemeConfig } from 'nextra-theme-docs';
-import cubicLogo from '/public/Cubic.png'; // Adjust the path if necessary
+import cubicLogo from './Cubic.png';
 
 const StoreIcon = () => (
   <svg
