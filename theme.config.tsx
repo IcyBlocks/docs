@@ -25,16 +25,18 @@ const config: DocsThemeConfig = {
     )
   },
   logo: (
-    <>
-      <img
-        src="./Cubic.png"
-        alt="Cubic Store"
-        style={{ height: '24px', width: '24px', marginRight: '.4em' }}
-      />
+    <div
+      style={{
+        paddingLeft: '50px',
+        lineHeight: '38px',
+        background: "url('https://i.ibb.co/RCCgMTR/Cubic-RPDISCORD.png') no-repeat left",
+        backgroundSize: '38px',
+      }}
+    >
       <span style={{ marginTop: '.1em', fontWeight: 900, fontFamily: "'Montserrat', sans-serif" }}>
         Cubic Store
       </span>
-    </>
+    </div>
   ),
   project: {
     link: 'https://cubic-store.tebex.io',
@@ -51,7 +53,6 @@ const config: DocsThemeConfig = {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta property="og:title" content="Cubic" />
       <meta property="og:description" content="Documentation" />
-      <link rel="icon" href="./Cubic.png" />
       <link
         href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
         rel="stylesheet"
