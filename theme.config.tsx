@@ -26,32 +26,12 @@ const config: DocsThemeConfig = {
   },
   logo: (
     <>
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 100 100"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill="#E0E0E0"
-          stroke="#4A4A4A"
-          strokeWidth="2"
-          d="M50 2 L98 25 L98 75 L50 98 L2 75 L2 25 Z"
-        />
-        <path
-          fill="#FFFFFF"
-          stroke="#4A4A4A"
-          strokeWidth="2"
-          d="M50 2 L2 25 L50 48 L98 25 Z"
-        />
-        <path
-          fill="none"
-          stroke="#4A4A4A"
-          strokeWidth="2"
-          d="M50 48 L50 98"
-        />
-      </svg>
-      <span style={{ marginLeft: '.4em', marginTop: '.1em', fontWeight: 900, fontFamily: "'Montserrat', sans-serif" }}>
+      <img
+        src="/Cubic.png"
+        alt="Cubic Store"
+        style={{ height: '24px', width: '24px', marginRight: '.4em' }}
+      />
+      <span style={{ marginTop: '.1em', fontWeight: 900, fontFamily: "'Montserrat', sans-serif" }}>
         Cubic Store
       </span>
     </>
@@ -68,6 +48,10 @@ const config: DocsThemeConfig = {
   },
   head: (
     <>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta property="og:title" content="Cubic" />
+      <meta property="og:description" content="Documentation" />
+      <link rel="icon" href="/Cubic.png" type="image/png" />
       <link
         href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
         rel="stylesheet"
