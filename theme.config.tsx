@@ -1,5 +1,6 @@
 import React from 'react';
 import { DocsThemeConfig } from 'nextra-theme-docs';
+import cubicLogo from '/public/Cubic.png'; // Adjust the path if necessary
 
 const StoreIcon = () => (
   <svg
@@ -27,7 +28,7 @@ const config: DocsThemeConfig = {
   logo: (
     <>
       <img
-        src="/Cubic.png"
+        src={cubicLogo}
         alt="Cubic Store"
         style={{ height: '24px', width: '24px', marginRight: '.4em' }}
       />
