@@ -1,0 +1,81 @@
+## Installation
+
+import { Steps } from 'nextra/components'
+import { FileTree } from 'nextra/components'
+
+<Steps>
+### Install The Resources
+ 
+Install the [**dependencies**](../shops#dependencies) <br/>
+Install cubic-shops `[Found In Your` [**Keymaster**](https://keymaster.fivem.net) `Account]`
+
+### Configure Ox Inventory
+
+<FileTree>
+  <FileTree.Folder name="ox_inventory" defaultOpen>
+    <FileTree.Folder name="data" defaultOpen>
+      <FileTree.File name="items.lua" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+```lua filename="items.lua" copy showLineNumbers
+['hacking_device'] = { 
+	label = "Hacking Device",
+	weight = 200,
+	stack = true,
+	close = true,
+	client = {
+		event = 'cubic-storerobbery:client:vault:useitem',
+	},
+},
+```
+
+### Insert The SQL Table
+
+We recommend using Heidi SQL to insert the SQL table
+
+<FileTree>
+  <FileTree.Folder name="cubic-shops" defaultOpen>
+    <FileTree.Folder name="cfg" defaultOpen>
+      <FileTree.File name="sql.sql" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+```sql filename="sql.sql" copy showLineNumbers
+-- WARNING: THIS WILL DELETE ANY TABLE WITH THE NAME `247_STORES`
+DROP TABLE IF EXISTS `247_STORES`;
+
+CREATE TABLE IF NOT EXISTS `247_STORES` (
+  `owned` VARCHAR(15) DEFAULT NULL,
+  `owner` VARCHAR(70) DEFAULT NULL,
+  `location` INT(255) DEFAULT NULL
+) ENGINE=INNODB;
+
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '1');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '2');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '3');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '4');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '5');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '6');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '7');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '8');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '9');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '10');
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '11'); -- Optional, gabz 24/7 next to Otto's
+```
+
+### Start The Resources
+
+Make sure to start the resources in the correct order
+
+```ini filename="server.cfg" copy showLineNumbers
+ensure oxmysql
+ensure ox_lib
+ensure [framework]
+ensure ox_inventory
+ensure peuren_minigames
+ensure cubic-247
+```
+</Steps>

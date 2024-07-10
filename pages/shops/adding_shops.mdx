@@ -1,0 +1,122 @@
+## Adding Shops
+
+import { Steps } from 'nextra/components'
+import { FileTree } from 'nextra/components'
+import { Callout } from 'nextra/components'
+
+<Steps>
+### Resource Configuration
+
+You will need to configure the resource to include your new location.
+
+<FileTree>
+  <FileTree.Folder name="cubic-shops" defaultOpen>
+    <FileTree.Folder name="cfg" defaultOpen>
+      <FileTree.File name="config.lua" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+Example:
+
+```lua filename="config.lua line 13" copy {13}
+Config.Stores.peds = {
+    [1] = vector4(373.03, 327.34, 103.57, 252.65),      -- Vinewood Hills
+    [2] = vector4(24.82, -1346.27, 29.5, 268.98),       -- Strawberry Ave
+    [3] = vector4(-3040.16, 584.51, 7.91, 16.91),       -- Ineseno Road
+    [4] = vector4(-3243.51, 1000.44, 12.83, 352.62),    -- Barbereno Road
+    [5] = vector4(1728.67, 6416.1, 35.04, 239.77),      -- Paleto Bay Gas Station On Highway
+    [6] = vector4(1696.75, 4923.77, 42.06, 328.11),     -- Grapeseed
+    [7] = vector4(1959.76, 3741.26, 32.34, 301.03),     -- Sandy Shores
+    [8] = vector4(548.71, 2671.34, 42.16, 95.55),       -- Harmony
+    [9] = vector4(2678.15, 3279.8, 55.24, 322.96),      -- Grand Senora
+    [10] = vector4(2557.21, 381.13, 108.62, 353.5),     -- Tataviam Mountains
+    [11] = vector4(812.79, -782.59, 26.17, 262.56),     -- This is for Gabz 24/7 MLO at La Messa, remove this line if you don't use the MLO
+    [12] = vector4(0, 0, 0, 0),                         -- Custom location, 12 is the location id
+},
+```
+
+```lua filename="config.lua line 26" copy {13}
+Config.Stores.management = {
+    [1] = vector3(379.1, 331.75, 103.63),               -- Vinewood Hills
+    [2] = vector3(29.56, -1340.55, 29.59),              -- Strawberry Ave
+    [3] = vector3(-3046.92, 587.17, 7.95),              -- Ineseno Road
+    [4] = vector3(-3248.58, 1005.4, 12.94),             -- Barbereno Road
+    [5] = vector3(1735.17, 6419.13, 35.2),              -- Paleto Bay Gas Station On Highway
+    [6] = vector3(1707.16, 4921.59, 41.9),              -- Grapeseed
+    [7] = vector3(1960.9, 3748.28, 32.45),              -- Sandy Shores
+    [8] = vector3(545.08, 2663.99, 42.23),              -- Harmony
+    [9] = vector3(2674.53, 3287.0, 55.33),              -- Grand Senora
+    [10] = vector3(2550.66, 386.15, 108.76),            -- Tataviam Mountains
+    [11] = vector3(817.34, -775.83, 26.28),             -- This is for Gabz 24/7 MLO at La Messa, remove this line if you don't use the MLO
+    [12] = vector3(0, 0, 0),                            -- Custom location, 12 is the location id
+},
+```
+
+```lua filename="config.lua line 64" copy {13}
+Config.Vault.vaults = {
+    [1] = {coords = vector3(381.11, 332.48, 103.57)},
+    [2] = {coords = vector3(31.28, -1339.36, 29.5)},
+    [3] = {coords = vector3(-3048.58, 588.49, 7.91)},
+    [4] = {coords = vector3(-3249.62, 1007.34, 12.83)},
+    [5] = {coords = vector3(1737.42, 6419.39, 35.04)},
+    [6] = {coords = vector3(1707.9, 4920.38, 42.06)},
+    [7] = {coords = vector3(1961.77, 3750.26, 32.34)},
+    [8] = {coords = vector3(543.77, 2662.59, 42.16)},
+    [9] = {coords = vector3(2674.25, 3289.21, 55.24)},
+    [10] = {coords = vector3(2549.42, 387.86, 108.62)},
+    [11] = {coords = vector3(819.18, -774.59, 26.18)},  -- This is for Gabz 24/7 MLO at La Messa, remove this line if you don't use the MLO
+    [12] = {coords = vector3(0, 0, 0)},                 -- Custom location, 12 is the location id
+}
+```
+
+### Insert The SQL Row
+ 
+<Callout type="info" emoji="ℹ️">
+  The SQL row is used to identify the owner of the shop and the location.
+</Callout>
+
+Example:
+
+```sql copy {13}
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '12'); -- Change the '12' to the actual location id if you have more than 12 locations
+```
+
+### Creating A New Zone
+
+<Callout type="warning" emoji="⚠️">
+  If you want the shop robbery to work, you must add a zone.
+</Callout>
+
+<FileTree>
+  <FileTree.Folder name="cubic-shops" defaultOpen>
+    <FileTree.Folder name="client" defaultOpen>
+      <FileTree.File name="cl_edit.lua" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+Example:
+
+```lua filename="cl_edit.lua line 282" copy
+local center12 = vector3(Config.Stores.peds[12].x, Config.Stores.peds[12].y, Config.Stores.peds[12].z) -- The center of the zone in the config, change the 12s to the actual location id
+local length12 = 6.0
+local width12 = 5.0
+local zone12 = BoxZone:Create(center12, length12, width12, { -- Use the data provided above, make sure to change the names acording to the location id
+    name = '247Zone:12', -- Name of the zone, make it match the location of the zone
+    heading = Config.Stores.peds[12].w, -- Heading in the config
+    minZ = Config.Stores.peds[12].z - 1.0, -- Minz in the config
+    maxZ = Config.Stores.peds[12].z + 2.0, -- Maxz in the config
+    debugPoly = Config.debug, -- Set the debug to config.debug
+})
+
+zone12:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside) -- Make sure to change the zone name, so for example if it's zone 13 then zone13:onPoint...
+    if isPointInside then
+        onEnterZone(zone12, tonumber(zone12.name:match(":(%d+)"))) -- Once again, make sure its the correct data
+    else
+        lib.hideTextUI()
+    end
+end)
+```
+
+</Steps>
