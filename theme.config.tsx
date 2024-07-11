@@ -22,13 +22,15 @@ function useHead() {
   const { frontMatter, title } = useConfig();
   const url = `https://docs.cubic-rp.com${asPath}`;
   const description = frontMatter.description || "Cubic Store's Documentation";
+  const pageTitle = `${title} - Cubic Docs`;
 
   return (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" type="image/png" href="https://i.ibb.co/RCCgMTR/Cubic-RPDISCORD.png" />
+      <title>{pageTitle}</title>
       <meta name="description" content={description} />
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
     </>
