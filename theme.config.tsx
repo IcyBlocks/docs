@@ -1,5 +1,7 @@
 import React from 'react';
 import { DocsThemeConfig } from 'nextra-theme-docs';
+import { useRouter } from 'next/router';
+import { useConfig } from 'nextra-theme-docs'
 
 const StoreIcon = () => (
   <svg
@@ -14,6 +16,24 @@ const StoreIcon = () => (
     />
   </svg>
 );
+
+function useHead() {
+  const { asPath } = useRouter();
+  const { frontMatter, title } = useConfig();
+  const url = `https://docs.cubic-rp.com${asPath}`;
+  const description = frontMatter.description || "Cubic Store's Documentation";
+
+  return (
+    <>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="icon" type="image/x-icon" href="/Cubic.png" />
+      <meta name="description" content={description} />
+      <meta name="og:title" content={title} />
+      <meta name="og:description" content={description} />
+      <meta name="og:url" content={url} />
+    </>
+  );
+}
 
 const config: DocsThemeConfig = {
   banner: {
@@ -48,23 +68,8 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Cubic Store',
   },
-  head: (
-    <>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="Cubic" />
-      <meta property="og:description" content="Documentation" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
-        rel="stylesheet"
-      />
-    </>
-  ),
-  editLink: {
-    component: null,
-  },
-  feedback: {
-    content: null,
-  },
+  docsRepositoryBase: 'https://github.com/IcyBlocks/docs',
+  head: useHead,
 };
 
 export default config;
