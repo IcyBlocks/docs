@@ -1,7 +1,7 @@
 import React from 'react';
 import { DocsThemeConfig } from 'nextra-theme-docs';
 import { useRouter } from 'next/router';
-import { useConfig } from 'nextra-theme-docs'
+import { useConfig } from 'nextra-theme-docs';
 
 const StoreIcon = () => (
   <svg
@@ -26,11 +26,11 @@ function useHead() {
   return (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="icon" type="image/x-icon" href="/Cubic.png" />
+      <link rel="icon" type="image/png" href="https://i.ibb.co/RCCgMTR/Cubic-RPDISCORD.png" />
       <meta name="description" content={description} />
-      <meta name="og:title" content={title} />
-      <meta name="og:description" content={description} />
-      <meta name="og:url" content={url} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={url} />
     </>
   );
 }
