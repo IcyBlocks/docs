@@ -70,7 +70,7 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Cubic Store',
   },
-  docsRepositoryBase: 'https://github.com/IcyBlocks/docs',
+  docsRepositoryBase: 'https://github.com/IcyBlocks/docs/tree/main',
   head: useHead,
 };
 
