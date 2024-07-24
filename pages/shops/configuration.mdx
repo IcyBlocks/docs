@@ -1,4 +1,4 @@
-## Configuration
+# Configuration
 
 import { FileTree } from 'nextra/components'
 import { Steps } from 'nextra/components'
@@ -130,7 +130,7 @@ end)
 ### Setup
 
 Go to the 'locales' folder and create a new file with the language's code <br/>
-Example:
+> Example:
 
 <FileTree>
   <FileTree.Folder name="cubic-shops" defaultOpen>
@@ -181,11 +181,11 @@ Go to the file you just created and copy & paste this:
 
 Then change the value on the right side to what you want it to say.
 
-## Configure ox_lib
+### Configure Ox Lib
 
 Add this to your server.cfg & change 'your_language' to the language code.
 
-```ini
+```ini filename='server.cfg' copy
 setr ox:locale your_language
 ```
 
