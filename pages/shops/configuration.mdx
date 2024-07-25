@@ -78,47 +78,10 @@ Config.Vault.vaults = {
   The SQL row is used to identify the owner of the shop and the location.
 </Callout>
 
-Example:
+> Example:
 
 ```sql copy {13}
 INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '12'); -- Change the '12' to the actual location id if you have more than 12 locations
-```
-
-### Creating A New Zone
-
-<Callout type="warning" emoji="⚠️">
-  If you want the shop robbery to work, you must add a zone.
-</Callout>
-
-<FileTree>
-  <FileTree.Folder name="cubic-shops" defaultOpen>
-    <FileTree.Folder name="client" defaultOpen>
-      <FileTree.File name="cl_edit.lua" />
-    </FileTree.Folder>
-  </FileTree.Folder>
-</FileTree>
-
-Example:
-
-```lua filename="cl_edit.lua line 282" copy
-local center12 = vector3(Config.Stores.peds[12].x, Config.Stores.peds[12].y, Config.Stores.peds[12].z) -- The center of the zone in the config, change the 12s to the actual location id
-local length12 = 6.0
-local width12 = 5.0
-local zone12 = BoxZone:Create(center12, length12, width12, { -- Use the data provided above, make sure to change the names acording to the location id
-    name = '247Zone:12', -- Name of the zone, make it match the location of the zone
-    heading = Config.Stores.peds[12].w, -- Heading in the config
-    minZ = Config.Stores.peds[12].z - 1.0, -- Minz in the config
-    maxZ = Config.Stores.peds[12].z + 2.0, -- Maxz in the config
-    debugPoly = Config.debug, -- Set the debug to config.debug
-})
-
-zone12:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside) -- Make sure to change the zone name, so for example if it's zone 13 then zone13:onPoint...
-    if isPointInside then
-        onEnterZone(zone12, tonumber(zone12.name:match(":(%d+)"))) -- Once again, make sure its the correct data
-    else
-        lib.hideTextUI()
-    end
-end)
 ```
 
 </Steps>
