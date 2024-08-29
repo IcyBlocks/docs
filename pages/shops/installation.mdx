@@ -7,7 +7,7 @@ import { FileTree } from 'nextra/components'
 ### Install The Resources
  
 Install the [**dependencies**](../shops#dependencies) <br/>
-Install cubic-shops `[Found In Your` [**Keymaster**](https://keymaster.fivem.net) `Account as "Cubic 247"]`
+Install cubic_shops `[Found In Your` [**Keymaster**](https://keymaster.fivem.net) `Account as "Cubic 247"]`
 
 ### Configure Ox Inventory
 
@@ -36,7 +36,7 @@ Install cubic-shops `[Found In Your` [**Keymaster**](https://keymaster.fivem.net
 We recommend using Heidi SQL to insert the SQL table
 
 <FileTree>
-  <FileTree.Folder name="cubic-shops" defaultOpen>
+  <FileTree.Folder name="cubic_shops" defaultOpen>
     <FileTree.Folder name="cfg" defaultOpen>
       <FileTree.File name="sql.sql" />
     </FileTree.Folder>
@@ -64,6 +64,7 @@ INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '
 INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '9');
 INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '10');
 INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '11'); -- Optional, gabz 24/7 next to Otto's
+INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '12');
 ```
 
 ### Start The Resources
@@ -73,7 +74,7 @@ Make sure to start the resources in the correct order
 ```ini filename="server.cfg" copy showLineNumbers
 ensure oxmysql
 ensure ox_lib
-ensure [framework] ## Note: A framework isn't required to run cubic-shops
+ensure [framework] ## Note: A framework isn't required to run cubic_shops
 ensure ox_inventory
 ensure peuren_minigames
 ensure cubic_shops
