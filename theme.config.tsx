@@ -38,14 +38,6 @@ function useHead() {
 }
 
 const config: DocsThemeConfig = {
-  banner: {
-    key: 'discount',
-    text: (
-      <a href="https://store.cubic-rp.com" target="_blank">
-        🎉 Use code 'DOCS-15' at checkout for a 15% discount! Cubic Store →
-      </a>
-    )
-  },
   logo: (
     <div
       style={{
