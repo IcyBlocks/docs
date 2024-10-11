@@ -20,7 +20,7 @@ const StoreIcon = () => (
 function useHead() {
   const { asPath } = useRouter();
   const { frontMatter, title } = useConfig();
-  const url = `https://docs.cubic-rp.com${asPath}`;
+  const url = `https://docs.cubic.onl${asPath}`;
   const description = frontMatter.description || "Cubic Store's Documentation";
   const pageTitle = title ? `${title} - Cubic Docs` : "Cubic Docs";
   const imageUrl = "https://i.ibb.co/V90fNX1/favicon.png";
