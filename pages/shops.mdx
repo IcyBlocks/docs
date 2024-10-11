@@ -1,11 +1,19 @@
 ## Information
 
-import { Cards, Card } from 'nextra/components'
-
+import { Cards } from 'nextra/components'
+import { CardsIcon, OneIcon, WarningIcon } from '../path/with/your/icons'
+ 
 <Cards>
-  <Card title="Installation" href="/shops/installation" />
-  <Card title="Configuration" href="/shops/configuration" />
-  <Card title="Adding Shops" href="/shops/adding_shops" />
+  <Cards.Card
+    icon={<Number1 />}
+    title="Installation"
+    href="/shops/installation"
+  />
+  <Cards.Card
+    icon={<Number2 />}
+    title="Configuration"
+    href="/shops/configuration"
+  />
 </Cards>
 
 Cubic Shops is an advanced player-owned shops with robberies. It allows players to sell their items in shops to get money. <br/>
