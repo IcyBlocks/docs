@@ -23,7 +23,7 @@ function useHead() {
   const url = `https://docs.cubic-rp.com${asPath}`;
   const description = frontMatter.description || "Cubic Store's Documentation";
   const pageTitle = title ? `${title} - Cubic Docs` : "Cubic Docs";
-  const imageUrl = "https://i.ibb.co/RCCgMTR/Cubic-RPDISCORD.png";
+  const imageUrl = "https://i.ibb.co/V90fNX1/favicon.png";
 
   return (
     <>
@@ -63,7 +63,13 @@ const config: DocsThemeConfig = {
     link: 'https://discord.gg/VbDEEWBvJB',
   },
   footer: {
-    text: 'Cubic Store',
+    footer: {
+      text: (
+        <span>
+          Cubic Store
+        </span>
+      )
+    }
   },
   docsRepositoryBase: 'https://github.com/IcyBlocks/docs/tree/main',
   head: useHead,
