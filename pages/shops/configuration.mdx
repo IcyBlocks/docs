@@ -21,44 +21,35 @@ You will need to configure the resource to include your new location.
 
 > Example:
 
-```lua filename="config.lua line 181" copy {13}
-        [13] = { -- Your custom location example
-            coords = vector4(0, 0, 0, 0), -- The location where the shop's ped would spawn
+```lua filename="config.lua" copy {1}
+        [13] = { -- Custom Location Id [change according to your location number]
+            coords = vector4(0.0, 0.0, 0.0, 0.0), -- The location where the shop's ped would spawn
+            mngCoords = vector3(0.0, 0.0, 0.0), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
-                { name = 'water', price = 500 },
-                { name = 'banana', price = 1 },
-                { name = 'apple', price = 5 },
+                { name = 'exampleItem1', price = 1 },
+                { name = 'exampleItem2', price = 100 },
+                { name = 'exampleItem3', price = 1000 },
                 -- Add more here
             },
-            price = 61000, -- The price a player would pay to own this store
-            sellPrice = 49900, -- The money a player would get after selling a store
-            ped = 'a_m_o_genstreet_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
-            canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
-        }, 
+            price = 150000, -- The price a player would pay to own this store
+            sellPrice = 135000, -- The money a player would get after selling a store
+            ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
+            canBeRobbed = false, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = false, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = 'Example Shop', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
+        },  
 ```
 
-```lua filename="config.lua line 196" copy {13}
--- Line 183 before adding store 13 to Config.Stores.peds
-    management = {                                                                                      -- Players will be able to manage shops here, same order as Config.Stores.peds [preconfigured for Gabz 24/7 MLO]
-        [1] = vector3(379.1, 331.75, 103.63),               -- Vinewood Hills
-        [2] = vector3(29.56, -1340.55, 29.59),              -- Strawberry Ave
-        [3] = vector3(-3046.92, 587.17, 7.95),              -- Ineseno Road
-        [4] = vector3(-3248.58, 1005.4, 12.94),             -- Barbereno Road
-        [5] = vector3(1735.17, 6419.13, 35.2),              -- Paleto Bay Gas Station On Highway
-        [6] = vector3(1707.16, 4921.59, 41.9),              -- Grapeseed
-        [7] = vector3(1960.9, 3748.28, 32.45),              -- Sandy Shores
-        [8] = vector3(545.08, 2663.99, 42.23),              -- Harmony
-        [9] = vector3(2674.53, 3287.0, 55.33),              -- Grand Senora
-        [10] = vector3(2550.66, 386.15, 108.76),            -- Tataviam Mountains
-        [11] = vector3(817.34, -775.83, 26.28),             -- This is for Gabz 24/7 MLO at La Messa, remove this line if you don't use the MLO
-        [12] = vector3(16.68, -1105.26, 29.6),              -- Legion Square Ammunation
-        [13] = vector3(0, 0, 0),                            -- Your custom location example
-    },
-```
-
-```lua filename="config.lua line 305" copy {13}
--- Line 276 before adding store 13 to Config.Stores.peds and Config.Stores.management
+```lua filename="config.lua" copy {1}
     vaults = {                                                                                          -- Vault locations [vec3], same order as Config.Stores.peds
         [1] = {coords = vector3(381.11, 332.48, 103.57)},
         [2] = {coords = vector3(31.28, -1339.36, 29.5)},
@@ -72,26 +63,76 @@ You will need to configure the resource to include your new location.
         [10] = {coords = vector3(2549.42, 387.86, 108.62)},
         [11] = {coords = vector3(819.18, -774.59, 26.18)},  -- This is for Gabz 24/7 MLO at La Messa, remove this line if you don't use the MLO
         -- Store 12 [Legion Square Ammunation] doesn't need a vault to be robbed, so the line doesn't exist
-        [13] = {coords = vector3(0, 0, 0)} -- Your custom shop example
-    }   
-```
-
-### Insert The SQL Row
- 
-<Callout type="info" emoji="ℹ️">
-  The SQL row is used to identify the owner of the shop and the location of it.
-</Callout>
-
-> Example:
-
-```sql copy {13}
--- Insert the SQL row into the table
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '13'); -- Change the '13' to the actual location id if you have more than 13 locations
+        [11] = {coords = vector3(0.0, 0.0, 0.0)}, -- Your Custom Location
+    } 
 ```
 
 </Steps>
 
-## Adding/Changing Locales
+## Using ESX 
+
+<Steps>
+
+### Configuration
+
+If you want to use this resource with ESX, you will need to change a few values in the config.lua file.
+
+<FileTree>
+  <FileTree.Folder name="cubic_shops" defaultOpen>
+    <FileTree.Folder name="config" defaultOpen>
+      <FileTree.File name="config.lua" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+Set Config.useQBCore to false:
+```lua filename="config.lua" copy
+Config.useQBCore = false
+```
+
+### Banking Configuration
+
+> Thanks to @theflybandit
+
+<FileTree>
+  <FileTree.Folder name="cubic_shops" defaultOpen>
+    <FileTree.Folder name="config" defaultOpen>
+      <FileTree.File name="sv_config.lua" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+```lua filename="sv_config.lua" copy
+-- Amount: amount to give to a player, reason: reason to give the player, src: the player
+Config.bankExportAddMoney = function(amount, reason, src) -- Custom bank export used to add money, ignore if using QBCore's banking system
+    local xPlayer = ESX.GetPlayerFromId(src)
+    xPlayer.addAccountMoney('bank', amount)
+end
+
+-- Amount: amount to remove from a player, reason: reason to remove the player's money, src: the player
+Config.bankExportRemoveMoney = function(amount, reason, src) -- Custom bank export used to remove money, ignore if using QBCore's banking system
+    local ESX = exports["es_extended"]:getSharedObject()
+
+    local xPlayer = ESX.GetPlayerFromId(src)
+
+    local money = xPlayer.getAccount('bank').money
+
+    local success = false
+
+    if money >= amount then
+        xPlayer.removeAccountMoney('bank', amount)
+        success = true
+    else
+        success = false
+    end
+
+    return success
+end
+```
+
+</Steps>
+
+## Adding Locales
 
 <Steps>
 
@@ -112,40 +153,41 @@ Go to the file you just created and copy & paste this:
 
 ```json filename="your_language.json" copy showLineNumbers
 {
-    "robbery_started": "Robbery started",
-    "robbery_failed": "Robbery failed",
-    "robbery_successful": "Robbery successful",
+    "robbery_started": "Robbery Started",
+    "robbery_failed": "Robbery Failed",
+    "robbery_successful": "Robbery Successful",
     "robbery_progress_circle": "Intimidating..",
     "open_shop": "Open Shop",
-    "no_stock": "The shop doesn't have enough stock! The current stock is: ",
+    "no_stock": "Current Stock Is: ",
     "open_management": "Manage Shop",
     "cancel_sell_store": "Canceled",
-    "sold_store": "Successfuly sold the shop",
+    "sold_store": "Successfuly Sold Shop",
     "set_item_price_label": "Set Price",
-    "set_item_price_desc": "Set the item's price",
+    "set_item_price_desc": "Set The Item Price",
     "supply": "Supply",
-    "supply_desc": "Supply your shop with more items",
+    "supply_desc": "Supply Your Shop With More Items",
     "supplier": "Supplier",
-    "supplier_desc": "Purchase supplies to add into your shop",
+    "supplier_desc": "Purchase Supplies To Add To Your Shop",
     "vault": "Vault",
-    "vault_desc": "Access the money your shop makes. Be careful as it can get robbed",
+    "vault_desc": "Where Your Money Is Stored",
     "sell_store": "Sell Shop",
-    "sell_store_desc": "Sell your shop",
-    "confirmation": "Wait a second!",
-    "confirmation_content": "Are you sure you want to sell your shop?",
+    "sell_store_desc": "Sell Your Shop",
+    "confirmation": "Confirmation",
+    "confirmation_content": "Are You Sure? This Action Can't Be Undone",
     "store_locked": "Shop Locked",
-    "store_locked_desc": "You aren't the owner of this shop!",
+    "store_locked_desc": "This Shop Is Already Owned",
     "management_menu_title": "Shop Management",
     "store_unowned": "Purchase Shop",
-    "store_unowned_desc": "Purchase this shop for: ",
-    "success_purchased_store": "Successfuly purchased shop",
-    "already_own_maximum_stores": "You already own a shop. The maximum shops to purchase is 1",
-    "not_enough_money": "You don't have enough money to purchase this shop. Make sure you have the required amount of momey in your bank account",
+    "store_unowned_desc": "Purchase This Shop For: ",
+    "success_purchased_store": "Successfuly Purchased Shop",
+    "already_own_maximum_stores": "Maximum Stores To Purchase Is One",
+    "not_enough_money": "Insufficient Funds",
     "store_label": "Shop",
     "supplier_label": "Supplier",
     "vault_label": "Vault",
-    "no_weapon_license": "You do not have a weapon license",
-    "error_occured": "An error occured when purchasing the item, please try again"
+    "no_weapon_license": "You Need A Weapon License",
+    "error_occured": "An Error Occured, Please Try Again",
+    "error_job_locked": "This Shop Is Job Locked"
 }
 ```
 
@@ -153,7 +195,7 @@ Then change the value on the right side to what you want it to say.
 
 ### Configure Ox Lib
 
-Add this to your server.cfg & change 'your_language' to the language code.
+Add this to your server.cfg & change 'your_language' to your language's code.
 
 ```ini filename="server.cfg" copy
 setr ox:locale your_language
@@ -179,9 +221,9 @@ lib.locale()
 
 Config = {}
 
-Config.useQBCore = true                                                                                 -- Set to true if you want to use QBCore, false for no core | Using no core will require custom banking
+Config.useQBCore = true                                                                                 -- Set to true if you use QB/QBX Core, false for standalone | Using standalone will require custom banking
 
-Config.banking = 'qb'                                                                                   -- Options: 'qb', 'custom' | Which banking system to use [edit in sv_config.lua]
+Config.banking = 'qb'                                                                                   -- Options: 'qb' for QB/QBX, 'custom' | Which banking system to use [edit in sv_config.lua]
 Config.debug = false                                                                                    -- Print extra debug statements & zone debug, useful for resolving errors but will increase resmon
 Config.target = 'ox'                                                                                    -- Options: "qb" [qb-target], "ox" [ox_target]
 Config.dispatch = "core-dispatch"                                                                       -- Options: "ps-dispatch", "gfx-mdt", "core-dispatch", "custom" [change in client/cl_edit.lua]
@@ -191,6 +233,7 @@ Config.Stores = {
     peds = {                                                                                            -- Shop locations, specifically where peds would spawn [preconfigured for Gabz 24/7 MLO's]
         [1] = { -- Vinewood Hills 24/7
             coords = vector4(373.03, 327.34, 103.57, 252.65), -- The location where the shop's ped would spawn
+            mngCoords = vector3(379.1, 331.75, 103.63), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -200,11 +243,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },     
 
         [2] = { -- Strawberry Ave 24/7
             coords = vector4(24.82, -1346.27, 29.5, 268.98), -- The location where the shop's ped would spawn
+            mngCoords = vector3(29.56, -1340.55, 29.59), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -214,11 +268,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },      
 
         [3] = { -- Ineseno Road 24/7
             coords = vector4(-3040.16, 584.51, 7.91, 16.91), -- The location where the shop's ped would spawn
+            mngCoords = vector3(-3046.92, 587.17, 7.95), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -228,11 +293,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },      
 
         [4] = { -- Barbereno Road 24/7
             coords = vector4(-3243.51, 1000.44, 12.83, 352.62), -- The location where the shop's ped would spawn
+            mngCoords = vector3(-3248.58, 1005.4, 12.94), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -242,11 +318,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },   
 
         [5] = { -- Paleto Bay Gas Station On Highway 24/7
             coords = vector4(1728.67, 6416.1, 35.04, 239.77), -- The location where the shop's ped would spawn
+            mngCoords = vector3(1735.17, 6419.13, 35.2), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -256,11 +343,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },    
 
         [6] = { -- Grapeseed 24/7
             coords = vector4(1696.75, 4923.77, 42.06, 328.11), -- The location where the shop's ped would spawn
+            mngCoords = vector3(1707.16, 4921.59, 41.9), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -270,11 +368,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },   
 
         [7] = { -- Sandy Shores 24/7
             coords = vector4(1959.76, 3741.26, 32.34, 301.03), -- The location where the shop's ped would spawn
+            mngCoords = vector3(1960.9, 3748.28, 32.45), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -284,11 +393,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },   
 
         [8] = { -- Harmony 24/7
             coords = vector4(548.71, 2671.34, 42.16, 95.55), -- The location where the shop's ped would spawn
+            mngCoords = vector3(545.08, 2663.99, 42.23), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -298,11 +418,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },   
            
         [9] = { -- Grand Senora 24/7
             coords = vector4(2678.15, 3279.8, 55.24, 322.96), -- The location where the shop's ped would spawn
+            mngCoords = vector3(2674.53, 3287.0, 55.33), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -312,11 +443,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },    
 
         [10] = { -- Tataviam Mountains 24/7
             coords = vector4(2557.21, 381.13, 108.62, 353.5), -- The location where the shop's ped would spawn
+            mngCoords = vector3(2550.66, 386.15, 108.76), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 5 },
                 { name = 'water', price = 3 },
@@ -326,11 +468,22 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },    
 
         [11] = { -- Gabz 24/7 MLO at La Messa, remove this if not using the MLO
             coords = vector4(812.79, -782.59, 26.17, 262.56), -- The location where the shop's ped would spawn
+            mngCoords = vector3(817.34, -775.83, 26.28), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
                 { name = 'burger', price = 3 },
                 { name = 'water', price = 1 },
@@ -340,13 +493,24 @@ Config.Stores = {
             sellPrice = 45000, -- The money a player would get after selling a store
             ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = true, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = false -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = '24/7 Store', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         },  
         
         [12] = { -- Legion Square Ammunation
             coords = vector4(18.43, -1108.05, 29.8, 155.39), -- The location where the shop's ped would spawn
+            mngCoords = vector3(16.68, -1105.26, 29.6), -- The location of the shop management, set to nil so a player can't purchase it
             supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
-                { name = 'weapon_pistol', price = 500 },
+                { name = 'weapon_pistol', price = 500, metadata = {requiresWeaponLicense = true} },
                 { name = 'ammo-9', price = 1 },
                 -- Add more here
             },
@@ -354,33 +518,24 @@ Config.Stores = {
             sellPrice = 85000, -- The money a player would get after selling a store
             ped = 's_m_y_ammucity_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
             canBeRobbed = false, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            requiresWeaponLicense = true -- If a player is required to have the item [weapon license] to purchase from this shop
+            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
+            jobLockedType = false, -- If the value above is the job type instead of the job name
+            blip = {
+                enabled = true, -- If the blip is enabled & shown to all players
+                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+                text = 'Ammunation', -- The text displayed on the map
+                shortrange = true, -- If the player needs to be close to the blip to show it
+                sprite = 110, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
+                color = 40, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
+                scale = 0.8 -- The scale/size of the blip
+            }
         }, 
-    },
-    management = {                                                                                      -- Players will be able to manage shops here, same order as Config.Stores.peds [preconfigured for Gabz 24/7 MLO]
-        [1] = vector3(379.1, 331.75, 103.63),               -- Vinewood Hills
-        [2] = vector3(29.56, -1340.55, 29.59),              -- Strawberry Ave
-        [3] = vector3(-3046.92, 587.17, 7.95),              -- Ineseno Road
-        [4] = vector3(-3248.58, 1005.4, 12.94),             -- Barbereno Road
-        [5] = vector3(1735.17, 6419.13, 35.2),              -- Paleto Bay Gas Station On Highway
-        [6] = vector3(1707.16, 4921.59, 41.9),              -- Grapeseed
-        [7] = vector3(1960.9, 3748.28, 32.45),              -- Sandy Shores
-        [8] = vector3(545.08, 2663.99, 42.23),              -- Harmony
-        [9] = vector3(2674.53, 3287.0, 55.33),              -- Grand Senora
-        [10] = vector3(2550.66, 386.15, 108.76),            -- Tataviam Mountains
-        [11] = vector3(817.34, -775.83, 26.28),             -- This is for Gabz 24/7 MLO at La Messa, remove this line if you don't use the MLO
-        [12] = vector3(16.68, -1105.26, 29.6),              -- Legion Square Ammunation
     },
     price = 50000,                                                                                      -- The price a player would pay when purchasing a 24/7 store
     sellPrice = 45000,                                                                                  -- The price that a player will recieve if selling the store
     enableSell = true,                                                                                  -- If players can sell their stores or not
     weaponLicenseItem = 'weaponlicense',                                                                -- The item that the player needs when purchasing an item from a store with requiresWeaponLicense set to true
-    onePerPerson = true,                                                                                -- Only allow players to only own 1 store | Options: true [recommended], false
-    supplier = {                                                                                        -- Items store owners will be able to purchase to put in their store
-        { name = 'burger', price = 7 },
-        { name = 'water', price = 3 },
-        -- Add more here
-    },
+    onePerPerson = true,
     enableSupplier = true,                                                                              -- If players can purchase items from the supplier
 }
 
@@ -393,7 +548,7 @@ Config.blacklist = {                                                            
 Config.RegisterRobbery = {
     cooldown = 600,                                                                                     -- Cooldown duration in seconds, recommended value: 600 [10 mins]
     pedDistance = 5,                                                                                    -- A player will need to be this close to the store ped to trigger the robbery
-    enableMinigame = true,                                                                              -- Enable or disable the looting minigame [gives the player money instantly if set to false]
+    enableMinigame = 'GTA:O',                                                                           -- Options: 'GTA:O' [GTA Online Style], true [Enable looting minigame], false [Instantly give the player money]
     minigame = function(source, ped, coords, targetPed, targetCoords)                                   -- The minigame function, only triggered if the option above is set to true
         TriggerEvent("cubic-247:client:notify", locale("robbery_started"), 'success')
         local randomIndex1 = tostring(math.random(1, 4)) -- Randomize the loot [not a default option in peuren-minigames]

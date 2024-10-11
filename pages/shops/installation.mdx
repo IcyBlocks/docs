@@ -7,7 +7,7 @@ import { FileTree } from 'nextra/components'
 ### Install The Resources
  
 Install the [**dependencies**](../shops#dependencies) <br/>
-Install cubic_shops `[Found In Your` [**Keymaster**](https://keymaster.fivem.net) `Account as "Cubic 247"]`
+Install cubic_shops `[Found In Your` [**Keymaster**](https://keymaster.fivem.net) `Account as "Cubic 24/7"]`
 
 ### Configure Ox Inventory
 
@@ -31,43 +31,7 @@ Install cubic_shops `[Found In Your` [**Keymaster**](https://keymaster.fivem.net
 },
 ```
 
-### Insert The SQL Table
-
-We recommend using Heidi SQL to insert the SQL table
-
-<FileTree>
-  <FileTree.Folder name="cubic_shops" defaultOpen>
-    <FileTree.Folder name="cfg" defaultOpen>
-      <FileTree.File name="sql.sql" />
-    </FileTree.Folder>
-  </FileTree.Folder>
-</FileTree>
-
-```sql filename="sql.sql" copy showLineNumbers
--- WARNING: THIS WILL DELETE ANY TABLE WITH THE NAME `247_STORES`
-DROP TABLE IF EXISTS `247_STORES`;
-
-CREATE TABLE IF NOT EXISTS `247_STORES` (
-  `owned` VARCHAR(15) DEFAULT NULL,
-  `owner` VARCHAR(70) DEFAULT NULL,
-  `location` INT(255) DEFAULT NULL
-) ENGINE=INNODB;
-
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '1');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '2');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '3');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '4');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '5');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '6');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '7');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '8');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '9');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '10');
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '11'); -- Optional, gabz 24/7 next to Otto's
-INSERT INTO `247_STORES` (`owned`, `owner`, `location`) VALUES ('false', NULL, '12');
-```
-
-### Start The Resources
+### Configure server.cfg
 
 Make sure to start the resources in the correct order
 
@@ -79,4 +43,6 @@ ensure ox_inventory
 ensure peuren_minigames
 ensure cubic_shops
 ```
+
+> Note: The SQL table is automatically added to your database
 </Steps>

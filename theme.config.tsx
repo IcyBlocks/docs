@@ -23,7 +23,7 @@ function useHead() {
   const url = `https://docs.cubic-rp.com${asPath}`;
   const description = frontMatter.description || "Cubic Store's Documentation";
   const pageTitle = title ? `${title} - Cubic Docs` : "Cubic Docs";
-  const imageUrl = "https://i.ibb.co/RCCgMTR/Cubic-RPDISCORD.png";  // Your image URL
+  const imageUrl = "https://i.ibb.co/RCCgMTR/Cubic-RPDISCORD.png";
 
   return (
     <>
