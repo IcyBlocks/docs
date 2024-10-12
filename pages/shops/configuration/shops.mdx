@@ -6,7 +6,7 @@ You will need to configure the resource to include your new location.
 
 > Example:
 
-```lua title="config.lua" copy
+```lua filename="config.lua" copy
 [13] = { -- Custom Location Id [change according to your location number]
     coords = vector4(0.0, 0.0, 0.0, 0.0), -- The location where the shop's ped would spawn
     mngCoords = vector3(0.0, 0.0, 0.0), -- The location of the shop management, set to nil so a player can't purchase it
@@ -34,7 +34,7 @@ You will need to configure the resource to include your new location.
 },  
 ```
 
-```lua title="sv_config.lua" copy
+```lua filename="sv_config.lua" copy
 vaults = {                                                                                        
     [1] = {coords = vector3(381.11, 332.48, 103.57)},
     [2] = {coords = vector3(31.28, -1339.36, 29.5)},
