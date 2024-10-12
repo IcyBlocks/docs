@@ -5,6 +5,5 @@ export default {
   },
   shops: {
     label: 'Cubic Shops',
-    collapsed: true
   }
 };
