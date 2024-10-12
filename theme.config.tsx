@@ -46,11 +46,11 @@ const config: DocsThemeConfig = {
       style={{
         paddingLeft: '50px',
         lineHeight: '38px',
-        background: "url('https://i.ibb.co/RCCgMTR/Cubic-RPDISCORD.png') no-repeat left",
+        background: "url('https://i.ibb.co/V90fNX1/favicon.png') no-repeat left",
         backgroundSize: '38px',
       }}
     >
-      <span style={{ marginTop: '.1em', fontWeight: 800, fontFamily: "'Rubik', sans-serif" }}>
+      <span style={{ marginTop: '.1em', fontWeight: 800, fontFamily: "'Open Sans', sans-serif" }}>
         Cubic Store
       </span>
     </div>
