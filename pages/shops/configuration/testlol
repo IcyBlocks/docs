@@ -1,0 +1,5 @@
+export default {
+    adding_shops: 'Adding Shops',
+    changing_locales: 'Adding Locales',
+    using_esx: 'Using ESX'
+};
