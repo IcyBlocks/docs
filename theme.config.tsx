@@ -63,14 +63,12 @@ const config: DocsThemeConfig = {
     link: 'https://discord.gg/VbDEEWBvJB',
   },
   footer: {
-    footer: {
-      text: (
-        <span>
-          Cubic Store
-        </span>
-      )
-    }
-  },
+    text: (
+      <span>
+        Cubic Store
+      </span>
+    ),
+  },  
   docsRepositoryBase: 'https://github.com/IcyBlocks/docs/tree/main',
   head: useHead,
 };
