@@ -1,0 +1,74 @@
+## Adding Locales
+
+import { FileTree } from 'nextra/components'
+import { Steps } from 'nextra/components'
+import { Callout } from 'nextra/components'
+
+<Steps>
+
+### Setup
+
+Go to the 'locales' folder and create a new file with the language's code <br/>
+> Example:
+
+<FileTree>
+  <FileTree.Folder name="cubic_shops" defaultOpen>
+    <FileTree.Folder name="locales" defaultOpen>
+      <FileTree.File name="fr.json" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+Go to the file you just created and copy & paste this:
+
+```json filename="your_language.json" copy showLineNumbers
+{
+    "robbery_started": "Robbery Started",
+    "robbery_failed": "Robbery Failed",
+    "robbery_successful": "Robbery Successful",
+    "robbery_progress_circle": "Intimidating..",
+    "open_shop": "Open Shop",
+    "no_stock": "Current Stock Is: ",
+    "open_management": "Manage Shop",
+    "cancel_sell_store": "Canceled",
+    "sold_store": "Successfuly Sold Shop",
+    "set_item_price_label": "Set Price",
+    "set_item_price_desc": "Set The Item Price",
+    "supply": "Supply",
+    "supply_desc": "Supply Your Shop With More Items",
+    "supplier": "Supplier",
+    "supplier_desc": "Purchase Supplies To Add To Your Shop",
+    "vault": "Vault",
+    "vault_desc": "Where Your Money Is Stored",
+    "sell_store": "Sell Shop",
+    "sell_store_desc": "Sell Your Shop",
+    "confirmation": "Confirmation",
+    "confirmation_content": "Are You Sure? This Action Can't Be Undone",
+    "store_locked": "Shop Locked",
+    "store_locked_desc": "This Shop Is Already Owned",
+    "management_menu_title": "Shop Management",
+    "store_unowned": "Purchase Shop",
+    "store_unowned_desc": "Purchase This Shop For: ",
+    "success_purchased_store": "Successfuly Purchased Shop",
+    "already_own_maximum_stores": "Maximum Stores To Purchase Is One",
+    "not_enough_money": "Insufficient Funds",
+    "store_label": "Shop",
+    "supplier_label": "Supplier",
+    "vault_label": "Vault",
+    "no_weapon_license": "You Need A Weapon License",
+    "error_occured": "An Error Occured, Please Try Again",
+    "error_job_locked": "This Shop Is Job Locked"
+}
+```
+
+Then change the value on the right side to what you want it to say.
+
+### Configure Ox Lib
+
+Add this to your server.cfg & change 'your_language' to your language's code.
+
+```ini filename="server.cfg" copy
+setr ox:locale your_language
+```
+
+</Steps>

@@ -1,0 +1,67 @@
+## Using ESX 
+
+import { FileTree } from 'nextra/components'
+import { Steps } from 'nextra/components'
+import { Callout } from 'nextra/components'
+
+<Steps>
+
+### Configuration
+
+If you want to use this resource with ESX, you will need to change a few values in the config.lua file. <br/>
+The same steps apply if you want to use a custom framework.
+
+<FileTree>
+  <FileTree.Folder name="cubic_shops" defaultOpen>
+    <FileTree.Folder name="config" defaultOpen>
+      <FileTree.File name="config.lua" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+Set Config.useQBCore to false:
+```lua filename="config.lua" copy
+Config.useQBCore = false
+```
+
+### Banking Configuration
+The below configuration shows ESX, you can edit it to support your custom framework <br/>
+> Thanks to @theflybandit
+
+<FileTree>
+  <FileTree.Folder name="cubic_shops" defaultOpen>
+    <FileTree.Folder name="config" defaultOpen>
+      <FileTree.File name="sv_config.lua" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+```lua filename="sv_config.lua" copy
+-- Amount: amount to give to a player, reason: reason to give the player, src: the player
+Config.bankExportAddMoney = function(amount, reason, src) -- Custom bank export used to add money, ignore if using QBCore's banking system
+    local xPlayer = ESX.GetPlayerFromId(src)
+    xPlayer.addAccountMoney('bank', amount)
+end
+
+-- Amount: amount to remove from a player, reason: reason to remove the player's money, src: the player
+Config.bankExportRemoveMoney = function(amount, reason, src) -- Custom bank export used to remove money, ignore if using QBCore's banking system
+    local ESX = exports["es_extended"]:getSharedObject()
+
+    local xPlayer = ESX.GetPlayerFromId(src)
+
+    local money = xPlayer.getAccount('bank').money
+
+    local success = false
+
+    if money >= amount then
+        xPlayer.removeAccountMoney('bank', amount)
+        success = true
+    else
+        success = false
+    end
+
+    return success
+end
+```
+
+</Steps>

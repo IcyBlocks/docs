@@ -50,7 +50,7 @@ const config: DocsThemeConfig = {
         backgroundSize: '38px',
       }}
     >
-      <span style={{ marginTop: '.1em', fontWeight: 800, fontFamily: "'Open Sans', sans-serif" }}>
+      <span style={{ marginTop: '.1em', fontWeight: 900, fontFamily: "'Open Sans', sans-serif" }}>
         Cubic Store
       </span>
     </div>
