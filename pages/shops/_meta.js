@@ -1,4 +1,6 @@
 export default {
     installation: 'Installation',
-    configuration: 'Configuration'
+    configuration: {
+        label: 'Configuration',
+      }
 };  
