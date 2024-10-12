@@ -1,10 +1,9 @@
-## Adding Shops
+# Adding Shops
 
-import { FileTree } from 'nextra/components'
-import { Steps } from 'nextra/components'
-import { Callout } from 'nextra/components'
+import { FileTree, Steps, Callout } from 'nextra/components';
 
 <Steps>
+
 ### Resource Configuration
 
 You will need to configure the resource to include your new location.
@@ -19,50 +18,49 @@ You will need to configure the resource to include your new location.
 
 > Example:
 
-```lua filename="config.lua" copy {1}
-        [13] = { -- Custom Location Id [change according to your location number]
-            coords = vector4(0.0, 0.0, 0.0, 0.0), -- The location where the shop's ped would spawn
-            mngCoords = vector3(0.0, 0.0, 0.0), -- The location of the shop management, set to nil so a player can't purchase it
-            supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
-                { name = 'exampleItem1', price = 1 },
-                { name = 'exampleItem2', price = 100 },
-                { name = 'exampleItem3', price = 1000 },
-                -- Add more here
-            },
-            price = 150000, -- The price a player would pay to own this store
-            sellPrice = 135000, -- The money a player would get after selling a store
-            ped = 'mp_m_shopkeep_01', -- The shop's ped, see [https://docs.fivem.net/docs/game-references/ped-models/] for more information
-            canBeRobbed = false, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
-            jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only avaliable for QBCore]
-            jobLockedType = false, -- If the value above is the job type instead of the job name
-            blip = {
-                enabled = false, -- If the blip is enabled & shown to all players
-                jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
-                text = 'Example Shop', -- The text displayed on the map
-                shortrange = true, -- If the player needs to be close to the blip to show it
-                sprite = 59, -- Blip sprite, see [https://docs.fivem.net/docs/game-references/blips/#blips] for more information
-                color = 2, -- Blip color, see [https://docs.fivem.net/docs/game-references/blips/#blip-colors] for more information
-                scale = 0.8 -- The scale/size of the blip
-            }
-        },  
+```lua title="config.lua" copy
+[13] = { -- Custom Location Id [change according to your location number]
+    coords = vector4(0.0, 0.0, 0.0, 0.0), -- The location where the shop's ped would spawn
+    mngCoords = vector3(0.0, 0.0, 0.0), -- The location of the shop management, set to nil so a player can't purchase it
+    supplier = { -- What the supplier of the store sells, and if the store is unowned it's the default items a player can purchase
+        { name = 'exampleItem1', price = 1 },
+        { name = 'exampleItem2', price = 100 },
+        { name = 'exampleItem3', price = 1000 },
+        -- Add more here
+    },
+    price = 150000, -- The price a player would pay to own this store
+    sellPrice = 135000, -- The money a player would get after selling a store
+    ped = 'mp_m_shopkeep_01', -- The shop's ped, see https://docs.fivem.net/docs/game-references/ped-models/ for more information
+    canBeRobbed = false, -- If the ped can be robbed, not the vault. Remove the vault coords to disable vault robberies
+    jobLocked = false, -- If the store is job locked, options: 'job name here' [lock to a certain job], false [anyone can own it] [only available for QBCore]
+    jobLockedType = false, -- If the value above is the job type instead of the job name
+    blip = {
+        enabled = false, -- If the blip is enabled & shown to all players
+        jobOnly = true, -- If the blip is only seen by the job set above [still requires qb-core]
+        text = 'Example Shop', -- The text displayed on the map
+        shortrange = true, -- If the player needs to be close to the blip to show it
+        sprite = 59, -- Blip sprite, see https://docs.fivem.net/docs/game-references/blips/#blips for more information
+        color = 2, -- Blip color, see https://docs.fivem.net/docs/game-references/blips/#blip-colors for more information
+        scale = 0.8 -- The scale/size of the blip
+    }
+},  
 ```
 
-```lua filename="config.lua" copy {14}
-    vaults = {                                                                                          -- Vault locations [vec3], same order as Config.Stores.peds
-        [1] = {coords = vector3(381.11, 332.48, 103.57)},
-        [2] = {coords = vector3(31.28, -1339.36, 29.5)},
-        [3] = {coords = vector3(-3048.58, 588.49, 7.91)},
-        [4] = {coords = vector3(-3249.62, 1007.34, 12.83)},
-        [5] = {coords = vector3(1737.42, 6419.39, 35.04)},
-        [6] = {coords = vector3(1707.9, 4920.38, 42.06)},
-        [7] = {coords = vector3(1961.77, 3750.26, 32.34)},
-        [8] = {coords = vector3(543.77, 2662.59, 42.16)},
-        [9] = {coords = vector3(2674.25, 3289.21, 55.24)},
-        [10] = {coords = vector3(2549.42, 387.86, 108.62)},
-        [11] = {coords = vector3(819.18, -774.59, 26.18)},  -- This is for Gabz 24/7 MLO at La Messa, remove this line if you don't use the MLO
-        -- Store 12 [Legion Square Ammunation] doesn't need a vault to be robbed, so the line doesn't exist
-        [13] = {coords = vector3(0.0, 0.0, 0.0)}, -- Your Custom Location
-    } 
+```lua title="sv_config.lua" copy
+vaults = {                                                                                        
+    [1] = {coords = vector3(381.11, 332.48, 103.57)},
+    [2] = {coords = vector3(31.28, -1339.36, 29.5)},
+    [3] = {coords = vector3(-3048.58, 588.49, 7.91)},
+    [4] = {coords = vector3(-3249.62, 1007.34, 12.83)},
+    [5] = {coords = vector3(1737.42, 6419.39, 35.04)},
+    [6] = {coords = vector3(1707.9, 4920.38, 42.06)},
+    [7] = {coords = vector3(1961.77, 3750.26, 32.34)},
+    [8] = {coords = vector3(543.77, 2662.59, 42.16)},
+    [9] = {coords = vector3(2674.25, 3289.21, 55.24)},
+    [10] = {coords = vector3(2549.42, 387.86, 108.62)},
+    [11] = {coords = vector3(819.18, -774.59, 26.18)},  -- This is for Gabz 24/7 MLO at La Mesa, remove this line if you don't use the MLO
+    [13] = {coords = vector3(0.0, 0.0, 0.0)}, -- Your Custom Location
+}
 ```
 
 </Steps>
